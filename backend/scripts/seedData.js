@@ -36,15 +36,23 @@ const seedDatabase = async () => {
         console.log('Cleared existing collections.');
 
         // 1. Super Admin
-        const superAdmin = await Admin.create({
-            name: 'Super Administrator',
-            email: 'kenznajeeb@gmail.com',
+        const superAdminParas = await Admin.create({
+            name: 'Paras (Super Admin)',
+            email: 'paras@gmail.com',
             password: 'admin123',
             role: 'super_admin',
             phone: '9876543210',
             isActive: true
         });
-        console.log('✓ Super Admin created: kenznajeeb@gmail.com / admin123');
+        const superAdminKenz = await Admin.create({
+            name: 'Super Administrator',
+            email: 'kenznajeeb@gmail.com',
+            password: 'admin123',
+            role: 'super_admin',
+            phone: '9876543211',
+            isActive: true
+        });
+        console.log('✓ Super Admins created: paras@gmail.com, kenznajeeb@gmail.com / admin123');
 
         // 2. Hospital
         const hospital = await Hospital.create({
@@ -491,7 +499,7 @@ const seedDatabase = async () => {
         console.log('🎉 SEEDING COMPLETED SUCCESSFULLY!');
         console.log('Demo Credentials for Assessment Review:');
         console.log('----------------------------------------');
-        console.log('1. Super Admin:  kenznajeeb@gmail.com / admin123');
+        console.log('1. Super Admin:  paras@gmail.com / admin123 (also kenznajeeb@gmail.com)');
         console.log('2. Hospital Admin: hospital@zenocare.com / hospital123');
         console.log('3. Doctor:       dr.sarah@zenocare.com / doctor123');
         console.log('4. Receptionist: reception@zenocare.com / reception123');

@@ -34,8 +34,8 @@ exports.protect = async (req, res, next) => {
                     user = {
                         _id: 'super_admin_hardcoded',
                         id: 'super_admin_hardcoded',
-                        name: 'Super Admin',
-                        email: 'kenznajeeb@gmail.com',
+                        name: decoded.email === 'paras@gmail.com' ? 'Paras' : 'Super Admin',
+                        email: decoded.email || 'paras@gmail.com',
                         role: 'super_admin',
                         userType: 'admin'
                     };

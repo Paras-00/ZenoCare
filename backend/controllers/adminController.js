@@ -52,8 +52,8 @@ exports.loginAdmin = async (req, res) => {
         }
 
         // Check for hardcoded super admin
-        if (email === 'kenznajeeb@gmail.com' && password === 'admin123') {
-            const token = jwt.sign({ id: 'super_admin_hardcoded', type: 'admin', role: 'super_admin' }, process.env.JWT_SECRET, {
+        if ((email === 'kenznajeeb@gmail.com' || email === 'paras@gmail.com') && password === 'admin123') {
+            const token = jwt.sign({ id: 'super_admin_hardcoded', email, type: 'admin', role: 'super_admin' }, process.env.JWT_SECRET, {
                 expiresIn: process.env.JWT_EXPIRE || '7d'
             });
 
@@ -64,8 +64,8 @@ exports.loginAdmin = async (req, res) => {
                     token,
                     admin: {
                         id: 'super_admin_hardcoded',
-                        name: 'Super Admin',
-                        email: 'kenznajeeb@gmail.com',
+                        name: email === 'paras@gmail.com' ? 'Paras (Super Admin)' : 'Super Admin',
+                        email: email,
                         role: 'super_admin',
                         userType: 'admin'
                     }

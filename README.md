@@ -182,7 +182,7 @@ All accounts are pre-seeded with synthetic test data:
 
 | Role | Email | Password | Access Capabilities |
 |---|---|---|---|
-| **Super Admin** | `kenznajeeb@gmail.com` | `admin123` | Platform-wide oversight, hospital approval & global analytics |
+| **Super Admin** | `paras@gmail.com` (or `kenznajeeb@gmail.com`) | `admin123` | Platform-wide oversight, hospital approval & global analytics |
 | **Hospital Admin** | `hospital@zenocare.com` | `hospital123` | Staff management, department setup, audit trail, reports |
 | **Clinician (Doctor)** | `dr.sarah@zenocare.com` | `doctor123` | Appointment schedule, clinical encounter notes, vitals, prescriptions, diagnostic orders |
 | **Front-Desk Reception** | `reception@zenocare.com` | `reception123` | Patient registration, live slot availability search, appointment booking & rescheduling |

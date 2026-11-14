@@ -25,5 +25,6 @@ router.put('/hospitals/:id/approve', approveHospital);
 router.put('/hospitals/:id/reject', rejectHospital);
 router.put('/hospitals/:id/toggle-status', toggleHospitalStatus);
 router.get('/analytics', getSystemAnalytics);
+router.get('/stats', getSystemAnalytics); // Alias for consistency
 
 module.exports = router;

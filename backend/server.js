@@ -6,8 +6,13 @@ const mongoSanitize = require('express-mongo-sanitize');
 const rateLimit = require('express-rate-limit');
 const connectDB = require('./config/database');
 
+const path = require('path');
+
 // Load environment variables
-dotenv.config();
+dotenv.config({ path: path.join(__dirname, '.env') });
+if (!process.env.MONGODB_URI) {
+    dotenv.config(); // fallback to current working directory
+}
 
 // Connect to MongoDB
 connectDB();
