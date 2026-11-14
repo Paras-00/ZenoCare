@@ -94,10 +94,10 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start server (only if not running under test runner)
+// Start server (only if not running under test runner or Vercel serverless)
 const PORT = process.env.PORT || 5000;
 let server;
-if (process.env.NODE_ENV !== 'test') {
+if (process.env.NODE_ENV !== 'test' && !process.env.VERCEL) {
   server = app.listen(PORT, () => {
     console.log(`🚀 Server running on port ${PORT}`);
     console.log(`📍 Environment: ${process.env.NODE_ENV || 'development'}`);
