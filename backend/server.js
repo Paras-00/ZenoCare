@@ -9,9 +9,16 @@ const connectDB = require('./config/database');
 const path = require('path');
 
 // Load environment variables
+dotenv.config({ path: path.join(__dirname, '.env.production') });
 dotenv.config({ path: path.join(__dirname, '.env') });
 if (!process.env.MONGODB_URI) {
     dotenv.config(); // fallback to current working directory
+}
+if (!process.env.MONGODB_URI) {
+    process.env.MONGODB_URI = 'MONGODB_URI_REDACTED';
+}
+if (!process.env.JWT_SECRET) {
+    process.env.JWT_SECRET = 'JWT_SECRET_REDACTED';
 }
 
 // Connect to MongoDB
