@@ -15,10 +15,12 @@ if (!process.env.MONGODB_URI) {
     dotenv.config(); // fallback to current working directory
 }
 if (!process.env.MONGODB_URI) {
-    process.env.MONGODB_URI = 'MONGODB_URI_REDACTED';
+    console.error('FATAL: MONGODB_URI environment variable is not set.');
+    process.exit(1);
 }
 if (!process.env.JWT_SECRET) {
-    process.env.JWT_SECRET = 'JWT_SECRET_REDACTED';
+    console.error('FATAL: JWT_SECRET environment variable is not set.');
+    process.exit(1);
 }
 
 // Connect to MongoDB
