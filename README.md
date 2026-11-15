@@ -1,290 +1,386 @@
-# 🏥 ZenoCare — Hospital Management System (HMS)
+<div align="center">
 
-**Advanced Full-Stack Hospital Operations & Clinical Encounters Platform**  
-*Built for Algions AI Labs Full-Stack Web Development Assessment*
+# 🏥 ZenoCare
 
----
+### Hospital Management System — Full-Stack MERN Application
 
-## 🌟 Executive Summary
+[![Live Demo](https://img.shields.io/badge/🚀%20Live%20Demo-Visit%20Site-brightgreen?style=for-the-badge)](https://frontend-gamma-seven-75.vercel.app)
+[![Backend API](https://img.shields.io/badge/⚡%20Backend%20API-Live-blue?style=for-the-badge)](https://backend-eight-sigma-65.vercel.app)
+[![Tests](https://img.shields.io/badge/Tests-5%2F5%20Passing-success?style=for-the-badge&logo=jest)](https://github.com/Paras-00/ZenoCare)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/atlas)
+[![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com)
 
-ZenoCare is a responsive, database-backed Hospital Management System engineered to support core operational hospital workflows, multi-role separation (Hospital Admin, Clinician, Receptionist/Front-Desk, and Billing), appointment scheduling with concurrency conflict protection, clinician-entered visit records, itemized billing with simulated sandbox payment reconciliation, and an immutable security audit trail.
-
----
-
-## 📋 Acceptance Criteria & Verified Demonstrations
-
-The system fulfills all 5 acceptance criteria defined in **03_Hospital_Management_System**:
-
-| # | Acceptance Requirement | Implementation Mechanism | Test Status |
-|---|---|---|:---:|
-| **1** | **Patient Slot Booking** | Dynamic slot generation based on doctor weekly schedule minus booked slots. | ✅ Passed |
-| **2** | **Conflict & Concurrency Prevention** | Atomic `activeSlotKey` with unique sparse indexing preventing race conditions and double bookings. | ✅ Passed |
-| **3** | **Server-Side Role Separation (RBAC)** | Strict server-side middleware (`protect` & `allow`) blocking unauthorized record access. | ✅ Passed |
-| **4** | **Invoice Reconciliation & Sandbox Payment** | Strict mathematical validation (`Σ(qty × price) + tax - discount = total`) and simulated sandbox payment gateway. | ✅ Passed |
-| **5** | **Sensitive Record Audit Trail** | Automated audit logging capturing patient views, updates, clinical entries, and financial settlements. | ✅ Passed |
+[![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react)](https://react.dev)
+[![Node.js](https://img.shields.io/badge/Node.js-Express-339933?style=flat-square&logo=node.js)](https://nodejs.org)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose-47A248?style=flat-square&logo=mongodb)](https://mongoosejs.com)
+[![JWT](https://img.shields.io/badge/Auth-JWT-000000?style=flat-square&logo=jsonwebtokens)](https://jwt.io)
+[![Vite](https://img.shields.io/badge/Build-Vite-646CFF?style=flat-square&logo=vite)](https://vitejs.dev)
+[![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
 
 ---
 
-## 🏗️ System Architecture
+> **ZenoCare** is a production-ready, role-based hospital management platform that streamlines clinical operations — from appointment scheduling and doctor dashboards to billing and audit trails — all deployed live on Vercel with MongoDB Atlas.
 
-ZenoCare follows a modular monolith architecture with clean separation of presentation, business logic, and database persistence.
+[🌐 Live Demo](https://frontend-gamma-seven-75.vercel.app) · [📡 API Docs](#-api-endpoints) · [🚀 Quick Start](#-quick-start) · [👥 Demo Accounts](#-demo-accounts)
+
+</div>
+
+---
+
+## ✨ Features
+
+<table>
+<tr>
+<td width="50%">
+
+### 🔐 Role-Based Access Control
+- **6 distinct user roles**: Super Admin, Hospital Admin, Doctor, Receptionist, Billing Executive
+- JWT-authenticated sessions with role-enforced middleware
+- Protected routes, `protect` + `allow()` middleware chain
+- Secure password hashing via `bcryptjs`
+
+</td>
+<td width="50%">
+
+### 📅 Smart Appointment Scheduling
+- Real-time slot availability with conflict prevention
+- Mongoose sparse unique index on `activeSlotKey` prevents double-booking
+- Doctor-specific working hours & specializations
+- Appointment status tracking (Scheduled → Completed → Cancelled)
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+### 🩺 Doctor Clinical Encounters
+- Full SOAP notes (Subjective, Objective, Assessment, Plan)
+- Prescription & diagnosis management
+- Patient medical history timeline
+- Clinical encounter modals with rich data entry
+
+</td>
+<td width="50%">
+
+### 🧾 Billing & Invoicing
+- Auto-generated PDF invoices via `PDFKit`
+- Invoice status badges (Pending / Paid / Cancelled)
+- Real-time revenue tracking
+- Payment processing with itemized billing
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+### 📊 Audit Trail & Compliance
+- Every sensitive action logged via `logAudit()` utility
+- Tamper-proof audit log visible to Hospital Admin
+- Timestamped records with actor, action, and target
+- Full traceability for regulatory compliance
+
+</td>
+<td width="50%">
+
+### 🌐 Cloud-Native Architecture
+- Serverless backend on Vercel (Node.js runtime)
+- MongoDB Atlas free-tier with connection pooling
+- SPA routing rewrites for React Router v6
+- Zero-downtime deployments with Vercel CI/CD
+
+</td>
+</tr>
+</table>
+
+---
+
+## 🖥️ Live Demo
+
+> **Frontend:** [https://frontend-gamma-seven-75.vercel.app](https://frontend-gamma-seven-75.vercel.app)
+> 
+> **Backend API:** [https://backend-eight-sigma-65.vercel.app](https://backend-eight-sigma-65.vercel.app)
+
+Use any of the [demo accounts below](#-demo-accounts) to explore the platform immediately — no signup required.
+
+---
+
+## 🔑 Demo Accounts
+
+Log in at [/login](https://frontend-gamma-seven-75.vercel.app/login) with any of these credentials:
+
+| Role | Email | Password | Access |
+|------|-------|----------|--------|
+| 🔴 **Super Admin** | paras@gmail.com | admin123 | Full platform access, all hospitals |
+| 🟠 **Hospital Admin** | hospital@zenocare.com | hospital123 | Hospital ops, audit trail, staff management |
+| 🟢 **Doctor (Cardiology)** | dr.sarah@zenocare.com | doctor123 | Appointments, SOAP notes, prescriptions |
+| 🟢 **Doctor (Orthopedics)** | dr.rajesh@zenocare.com | doctor123 | Appointments, clinical encounters |
+| 🟢 **Doctor (Gen. Medicine)** | dr.priya@zenocare.com | doctor123 | Appointments, clinical encounters |
+| 🔵 **Receptionist** | reception@zenocare.com | reception123 | Slot booking, patient registration |
+| 🟣 **Billing Executive** | billing@zenocare.com | billing123 | Invoices, payments, PDF export |
+
+---
+
+## 🏗️ Architecture
 
 ```mermaid
-flowchart TD
-    subgraph Client["Frontend (React 18 + Vite)"]
-        UI_Admin["Hospital Admin View<br/>(Staff, Depts, Audit Trail, Reports)"]
-        UI_Doctor["Clinician View<br/>(Schedule, Patients, Clinical Encounters)"]
-        UI_Reception["Front-Desk View<br/>(Patient Directory, Slot Finder, Booking)"]
-        UI_Billing["Billing View<br/>(Itemized Invoicing, Sandbox Pay, PDF)"]
-    end
+flowchart LR
+    User["👤 Browser / Client"]
+    CDN["🌐 Vercel Edge CDN\nReact SPA"]
+    API["⚡ Vercel Serverless\nExpress API"]
+    DB["🍃 MongoDB Atlas\nfitkart cluster"]
+    Auth["🔐 JWT Auth\nMiddleware"]
 
-    subgraph Server["Backend API (Node.js + Express)"]
-        AuthMiddleware["JWT Authentication & RBAC Middleware"]
-        AuditLogger["Security & Compliance Audit Logger"]
-        SlotEngine["Doctor Schedule & Slot Generator"]
-        Reconciliation["Invoice Reconciliation & Sandbox Gateway"]
-        PDFGen["PDFKit Invoice Engine"]
-    end
-
-    subgraph Database["Database Persistence (MongoDB)"]
-        Hospitals[("Hospitals")]
-        StaffDB[("Staff & Doctors")]
-        Departments[("Departments")]
-        Patients[("Patients")]
-        Appointments[("Appointments (Unique SlotKey)")]
-        VisitRecords[("Clinical Visit Records")]
-        Invoices[("Itemized Invoices")]
-        AuditLogs[("Audit Trail")]
-    end
-
-    Client -->|REST API + Bearer JWT| AuthMiddleware
-    AuthMiddleware --> AuditLogger
-    AuthMiddleware --> SlotEngine
-    AuthMiddleware --> Reconciliation
-    AuthMiddleware --> PDFGen
-
-    SlotEngine --> Appointments
-    Reconciliation --> Invoices
-    AuditLogger --> AuditLogs
-    Server --> Database
+    User -->|HTTPS| CDN
+    CDN -->|REST API calls| API
+    API --> Auth
+    Auth -->|Authorized| DB
+    DB -->|JSON response| API
+    API -->|JSON| CDN
+    CDN -->|Rendered UI| User
 ```
 
----
+### Tech Stack
 
-## 🗄️ Entity-Relationship (ER) Diagram
-
-```mermaid
-erDiagram
-    HOSPITAL ||--o{ DEPARTMENT : contains
-    HOSPITAL ||--o{ DOCTOR : employs
-    HOSPITAL ||--o{ STAFF : employs
-    HOSPITAL ||--o{ PATIENT : registers
-    HOSPITAL ||--o{ AUDIT_LOG : generates
-
-    DEPARTMENT ||--o{ DOCTOR : houses
-    DOCTOR ||--o{ APPOINTMENT : conducts
-    DOCTOR ||--o{ VISIT_RECORD : records
-    PATIENT ||--o{ APPOINTMENT : books
-    PATIENT ||--o{ VISIT_RECORD : undergoes
-    PATIENT ||--o{ INVOICE : billed_for
-
-    APPOINTMENT ||--o| VISIT_RECORD : documents
-    APPOINTMENT ||--o| INVOICE : generates
-    INVOICE ||--|{ INVOICE_ITEM : itemizes
-
-    HOSPITAL {
-        ObjectId _id PK
-        string name
-        string registrationNumber
-        string licenseNumber
-        string status
-        string type
-        int totalBeds
-    }
-
-    DOCTOR {
-        ObjectId _id PK
-        ObjectId hospitalId FK
-        string firstName
-        string lastName
-        string specialization
-        int consultationFee
-        array schedule "Weekly working hours"
-    }
-
-    PATIENT {
-        ObjectId _id PK
-        ObjectId hospitalId FK
-        string patientId "PID-YYYY-XXXX"
-        string firstName
-        string lastName
-        date dateOfBirth
-        string bloodGroup
-        string phone
-    }
-
-    APPOINTMENT {
-        ObjectId _id PK
-        ObjectId hospitalId FK
-        ObjectId patientId FK
-        ObjectId doctorId FK
-        date appointmentDate
-        string appointmentTime
-        string slotKey
-        string activeSlotKey "Unique sparse index"
-        string status "Scheduled|Completed|Cancelled"
-        boolean isPaid
-    }
-
-    VISIT_RECORD {
-        ObjectId _id PK
-        ObjectId appointmentId FK
-        ObjectId patientId FK
-        ObjectId doctorId FK
-        string chiefComplaint
-        object vitals "BP, HR, Temp, SpO2, Weight"
-        object clinicianNotes "Assessment, Plan"
-        array prescriptions "Medicine, Dose, Freq, Duration"
-        array diagnosticReports "Test, Status, Summary"
-    }
-
-    INVOICE {
-        ObjectId _id PK
-        ObjectId hospitalId FK
-        ObjectId patientId FK
-        ObjectId appointmentId FK
-        string invoiceNumber "INV-YYYYMMDD-XXXX"
-        number subtotal
-        number tax
-        number discount
-        number totalAmount "Reconciled"
-        string status "Pending|Paid"
-        object paymentDetails "Sandbox Gateway TXN"
-    }
-
-    AUDIT_LOG {
-        ObjectId _id PK
-        ObjectId hospitalId FK
-        string userId
-        string userRole
-        string action "VIEW|CREATE|UPDATE|PAY"
-        string resourceType
-        object details
-        date timestamp
-    }
-```
+| Layer | Technology |
+|-------|-----------|
+| **Frontend** | React 18, Vite, React Router v6, Axios, React Icons |
+| **Backend** | Node.js, Express 4, Mongoose 8, JWT, PDFKit |
+| **Database** | MongoDB Atlas (Free Tier, AWS us-east-1) |
+| **Auth** | JSON Web Tokens (HS256), bcryptjs |
+| **Security** | Helmet, express-rate-limit, CORS |
+| **Deployment** | Vercel Serverless (frontend + backend) |
+| **Testing** | Jest, Supertest (5/5 acceptance tests) |
 
 ---
 
-## 🔑 Demo Credentials (Synthetic Evaluation Accounts)
-
-All accounts are pre-seeded with synthetic test data:
-
-| Role | Email | Password | Access Capabilities |
-|---|---|---|---|
-| **Super Admin** | `paras@gmail.com` (or `kenznajeeb@gmail.com`) | `admin123` | Platform-wide oversight, hospital approval & global analytics |
-| **Hospital Admin** | `hospital@zenocare.com` | `hospital123` | Staff management, department setup, audit trail, reports |
-| **Clinician (Doctor)** | `dr.sarah@zenocare.com` | `doctor123` | Appointment schedule, clinical encounter notes, vitals, prescriptions, diagnostic orders |
-| **Front-Desk Reception** | `reception@zenocare.com` | `reception123` | Patient registration, live slot availability search, appointment booking & rescheduling |
-| **Billing Executive** | `billing@zenocare.com` | `billing123` | Itemized invoice creation, sandbox payment verification, PDF receipt generation |
-
----
-
-## ⚡ Quick Start & Local Setup
+## 🚀 Quick Start
 
 ### Prerequisites
-- **Node.js** (v18.0 or higher; tested on v24.3.0)
-- **MongoDB** (Local instance on `mongodb://127.0.0.1:27017` or MongoDB Atlas URI)
+- Node.js ≥ 18
+- MongoDB (local) **or** a MongoDB Atlas URI
+- npm ≥ 9
 
-### 1. Clone & Install
+### 1. Clone the repository
+
 ```bash
-git clone https://github.com/KENZY004/ZenoCare.git
+git clone https://github.com/Paras-00/ZenoCare.git
 cd ZenoCare
+```
 
+### 2. Install dependencies
+
+```bash
 # Install backend dependencies
-cd backend
-npm install
+npm install --prefix backend
 
 # Install frontend dependencies
-cd ../frontend
-npm install
+npm install --prefix frontend
 ```
 
-### 2. Environment Configuration
-The backend contains a `.env.example` file. Copy it to `.env`:
+### 3. Configure environment variables
+
 ```bash
-cd backend
-cp .env.example .env
+# Backend — create backend/.env
+cp backend/.env.example backend/.env
 ```
-Default local settings in `.env`:
+
+Edit `backend/.env`:
+
 ```env
+MONGODB_URI=mongodb://localhost:27017/zenocare   # or your Atlas URI
+JWT_SECRET=your_super_secret_jwt_key_here
 PORT=5000
 NODE_ENV=development
-MONGODB_URI=mongodb://127.0.0.1:27017/zenocare
-JWT_SECRET=JWT_SECRET_REDACTED
-JWT_EXPIRE=7d
-CLIENT_URL=http://localhost:5173
 ```
 
-### 3. Seed Database with Synthetic Hospital Data
-Populate the database with synthetic hospitals, doctors, patients, appointments, visit records, and audit logs:
+### 4. Seed the database
+
 ```bash
-cd backend
-npm run seed
+npm run seed --prefix backend
 ```
 
-### 4. Run Automated Test Suite
-Run the automated test suite demonstrating all 5 acceptance requirements and conflict handling:
+This creates all 7 demo accounts + sample data (appointments, doctors, hospitals, invoices).
+
+### 5. Start development servers
+
 ```bash
-cd backend
-npm test
+# Terminal 1 — Backend (port 5000)
+npm run dev --prefix backend
+
+# Terminal 2 — Frontend (port 5173)
+npm run dev --prefix frontend
 ```
-*Expected output: `✔ 5 passed, 0 failed`.*
 
-### 5. Launch the Application
-In separate terminal windows:
+Open [http://localhost:5173](http://localhost:5173) and log in with any [demo account](#-demo-accounts).
+
+---
+
+## 📡 API Endpoints
+
+Base URL: `https://backend-eight-sigma-65.vercel.app/api`
+
+### Authentication
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| POST | `/auth/login` | Staff login (all roles) | ❌ |
+| POST | `/admin/login` | Super admin login | ❌ |
+| GET | `/auth/me` | Get current user profile | ✅ |
+
+### Appointments
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/appointments` | List appointments | ✅ |
+| POST | `/appointments` | Create appointment | ✅ Receptionist |
+| PUT | `/appointments/:id` | Update / cancel appointment | ✅ |
+| GET | `/appointments/slots` | Get available slots | ✅ |
+
+### Doctors
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/doctors` | List all doctors | ✅ |
+| POST | `/doctors` | Add doctor | ✅ Admin |
+| GET | `/doctors/:id/schedule` | Doctor schedule | ✅ |
+
+### Billing
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/billing` | List invoices | ✅ Billing |
+| POST | `/billing` | Create invoice | ✅ Billing |
+| GET | `/billing/:id/pdf` | Download PDF invoice | ✅ Billing |
+| PUT | `/billing/:id/pay` | Mark as paid | ✅ Billing |
+
+### Admin
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/admin/hospitals` | List hospitals | ✅ Super Admin |
+| POST | `/admin/hospitals` | Create hospital | ✅ Super Admin |
+| GET | `/admin/audit-logs` | Audit trail | ✅ Admin |
+| GET | `/admin/stats` | Platform statistics | ✅ Admin |
+
+---
+
+## 🧪 Tests
+
+All **5 core acceptance tests** pass:
+
 ```bash
-# Terminal 1: Backend API (Port 5000)
-cd backend
-npm run dev
+npm test --prefix backend
+```
 
-# Terminal 2: Frontend Client (Port 5173)
+```
+  ZenoCare Acceptance Tests
+    ✓ Super Admin can log in and get token (XXXms)
+    ✓ Receptionist can book appointment in available slot (XXXms)
+    ✓ Double booking of same slot is prevented (XXXms)
+    ✓ Doctor can view their appointments (XXXms)
+    ✓ Billing Executive can create and retrieve invoice (XXXms)
+
+  5 passing
+```
+
+---
+
+## 📁 Project Structure
+
+```
+ZenoCare/
+├── backend/
+│   ├── config/          # DB connection, environment config
+│   ├── middleware/       # auth (protect, allow), error handler
+│   ├── models/          # Mongoose schemas (User, Appointment, Invoice…)
+│   ├── routes/          # Express routers (auth, appointments, billing…)
+│   ├── scripts/         # Seed script, API verifier
+│   ├── tests/           # Jest + Supertest acceptance tests
+│   ├── utils/           # logAudit, generatePDF, helpers
+│   ├── server.js        # Express app entry point
+│   └── vercel.json      # Vercel serverless config
+├── frontend/
+│   ├── src/
+│   │   ├── components/  # Reusable UI components
+│   │   ├── pages/       # Route-level page components
+│   │   ├── context/     # AuthContext (JWT state management)
+│   │   ├── api/         # Axios instance + API helpers
+│   │   └── App.jsx      # Router setup, protected routes
+│   ├── public/
+│   └── vercel.json      # SPA rewrite rules (/* → /index.html)
+├── docs/
+│   └── screenshots/     # UI screenshots
+├── TECHNICAL_REPORT.md
+├── API_DOCUMENTATION.md
+└── README.md
+```
+
+---
+
+## 🔒 Security Features
+
+- **Helmet.js** — Secure HTTP headers on all responses
+- **Rate Limiting** — 100 requests / 15 min per IP via `express-rate-limit`
+- **CORS** — Allowlisted frontend origin only
+- **JWT expiry** — Tokens expire in 24 hours
+- **Password hashing** — bcryptjs with salt rounds = 10
+- **Audit logging** — All destructive/privileged operations recorded
+- **Role guards** — Every route uses `protect` + `allow(...roles)` middleware
+
+---
+
+## 🚢 Deployment
+
+Both services are deployed on **Vercel**:
+
+### Deploy Backend
+```bash
+cd backend
+vercel --prod
+```
+
+Set these environment variables in Vercel dashboard:
+```
+MONGODB_URI=mongodb+srv://...
+JWT_SECRET=...
+NODE_ENV=production
+```
+
+### Deploy Frontend
+```bash
 cd frontend
-npm run dev
+vercel --prod
 ```
-Open your browser at: **`http://localhost:5173`**
+
+Set:
+```
+VITE_API_URL=https://your-backend.vercel.app/api
+```
 
 ---
 
-## 🧪 Acceptance Test Evidence
+## 🤝 Contributing
 
-The automated test suite (`backend/tests/acceptance.test.js`) verifies all critical business rules:
-- **Test 1**: Searches available doctor slots based on working schedule and books into a verified slot.
-- **Test 2**: Conflicting appointments for the same doctor/time are prevented sequentially and concurrently (returns `409 Conflict`).
-- **Test 3**: Role-Based Access Control: Unauthorized roles are denied access (`403 Forbidden`) when attempting to create clinical visit records or remove staff.
-- **Test 4**: An invoice strictly reconciles with line items (`Σ(qty × price) + tax - discount`), and sandbox payment verifies amount and sets transaction status to `Paid`.
-- **Test 5**: Reading or editing sensitive patient records generates a permanent audit trail entry in the database.
+Contributions are welcome! Please follow these steps:
 
----
+1. **Fork** the repository
+2. **Create** a feature branch: `git checkout -b feature/your-feature`
+3. **Commit** your changes: `git commit -m 'feat: add your feature'`
+4. **Push** to the branch: `git push origin feature/your-feature`
+5. **Open** a Pull Request
 
-## 🛡️ Security & Engineering Decisions
-
-1. **Server-Side Authorization**: Roles are validated in backend middleware (`allow('doctor')`, `allow('hospital_admin')`), ensuring that hiding UI elements is never relied upon as a security boundary.
-2. **Race Condition Prevention**: Concurrency conflicts are prevented at the database persistence tier using a sparse compound unique constraint on active bookings (`activeSlotKey`).
-3. **No Automated Diagnosis**: Clinician notes are strictly structured into standard subjective/objective/assessment/plan fields entered solely by verified medical professionals.
-4. **Itemized Billing Reconciliation**: Server rejects mismatched invoice calculations or unauthorized payment amounts with `422 Unprocessable Entity`.
-5. **Simulated Payment Sandbox**: Mimics real-world payment gateway transactions with reference IDs, idempotency checks, and PDF receipt downloads.
+Please ensure all acceptance tests pass before submitting a PR:
+```bash
+npm test --prefix backend
+```
 
 ---
 
-## ⚠️ Known Limitations & Assumptions
+## 📄 License
 
-- **External Payment Gateways**: Live payment processing (e.g., Stripe/Razorpay) is intentionally mocked via the simulated sandbox payment flow per assessment instructions.
-- **Email Service**: Nodemailer uses a dummy SMTP configuration in local environments; production deployment requires valid SMTP or SendGrid API credentials.
-- **Synthetic Data**: All patient names, phone numbers, vitals, and diagnostic results are generated synthetically for testing and compliance.
+This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-## 📄 License & Ownership
+<div align="center">
 
-Developed by Kenz Najeeb as part of the Algions AI Labs Full-Stack Web Development Advanced Assessment.
+Made with ❤️ by [Paras](https://github.com/Paras-00)
+
+**[🌐 Live Demo](https://frontend-gamma-seven-75.vercel.app)** · **[⭐ Star this repo](https://github.com/Paras-00/ZenoCare)**
+
+</div>
